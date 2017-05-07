@@ -21,7 +21,7 @@ import com.jeffdonovan.adserver.exception.ResourceException;
 import com.jeffdonovan.adserver.service.AdService;
 
 /**
- * Controller for storing and retrieving Ad resource. 
+ * Controller for storing and retrieving Ad resource.
  * 
  * @author Jeff.Donovan
  *
@@ -31,18 +31,18 @@ public class AdController {
 
 	@Autowired
 	AdService adService;
-	
+
 	/**
 	 * End point to retrieve all {@link Ad} resources in the database
 	 * 
 	 * @return List<Ad> List of all Ads in database
 	 */
 	@RequestMapping("/ad")
-    public @ResponseBody List<Ad> index() {
+	public @ResponseBody List<Ad> index() {
 		List<Ad> ads = adService.findAllAds();
-    	return ads;
-    }
-	
+		return ads;
+	}
+
 	/**
 	 * End point to retrieve a single {@link Ad} resource by partner id
 	 * 
@@ -52,44 +52,46 @@ public class AdController {
 	 * @throws ResourceException
 	 */
 	@RequestMapping("/ad/{partnerId}")
-    public @ResponseBody Ad show(@PathVariable String partnerId, HttpServletResponse response) throws ResourceException {
+	public @ResponseBody Ad show(@PathVariable String partnerId, HttpServletResponse response)
+			throws ResourceException {
 		Ad ad = adService.findActiveAdByPartnerId(partnerId);
-		if (null == ad){
+		if (null == ad) {
 			throw new ResourceException(HttpStatus.NOT_FOUND, "Could not find resource for partner id " + partnerId);
 		}
 		return ad;
-    }
-	
+	}
+
 	/**
 	 * End point used for saving {@link Ad} resource
+	 * 
 	 * @param ad
 	 * @param response
 	 * @return
 	 * @throws ResourceException
 	 */
-    @RequestMapping(value ="/ad", method = { RequestMethod.POST  })
-    public @ResponseBody Ad save(@RequestBody Ad ad, HttpServletResponse response) throws ResourceException {
-    	
-    	List<String> validationErrors = Ad.validate(ad);
-    	if (!CollectionUtils.isEmpty(validationErrors)){
-    		throw new ResourceException(HttpStatus.BAD_REQUEST, 
-    				               validationErrors.stream().map(Object::toString).collect(Collectors.joining(", ")));
-    	}
-    	
-    	Ad activeAd = adService.findActiveAdByPartnerId(ad.getPartnerId());
-		if (null != activeAd){
-			throw new ResourceException(HttpStatus.CONFLICT, "Active resource exists for partner id " + ad.getPartnerId());
+	@RequestMapping(value = "/ad", method = { RequestMethod.POST })
+	public @ResponseBody Ad save(@RequestBody Ad ad, HttpServletResponse response) throws ResourceException {
+
+		List<String> validationErrors = Ad.validate(ad);
+		if (!CollectionUtils.isEmpty(validationErrors)) {
+			throw new ResourceException(HttpStatus.BAD_REQUEST,
+					validationErrors.stream().map(Object::toString).collect(Collectors.joining(", ")));
 		}
-		
-    	Ad savedAd = adService.saveAd(ad);
-    	if (null == savedAd){
-    		throw new ResourceException(HttpStatus.BAD_REQUEST, "Save Ad failed");
-    	}
-    	else {
-    		response.setStatus(Response.SC_CREATED);
-    	}
-    	return savedAd;
-    	
-    }
-    
+
+		Ad activeAd = adService.findActiveAdByPartnerId(ad.getPartnerId());
+		if (null != activeAd) {
+			throw new ResourceException(HttpStatus.CONFLICT,
+					"Active resource exists for partner id " + ad.getPartnerId());
+		}
+
+		Ad savedAd = adService.saveAd(ad);
+		if (null == savedAd) {
+			throw new ResourceException(HttpStatus.BAD_REQUEST, "Save Ad failed");
+		} else {
+			response.setStatus(Response.SC_CREATED);
+		}
+		return savedAd;
+
+	}
+
 }

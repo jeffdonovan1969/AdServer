@@ -24,26 +24,26 @@ public class AdServiceImpl implements AdService {
 
 	@Autowired
 	AdRepository adRepository;
-	
+
 	@Override
-    public List<Ad> findAllAds(){
-    	List<Ad> ads = new ArrayList<Ad>();
-    	Iterable<Ad> adsForPartnerId = adRepository.findAll();
-    	adsForPartnerId.forEach(ads::add);
-    	return ads;
-    }
-	
-	@Override
-	public Ad findActiveAdByPartnerId(String partnerId){
-		Ad ad = adRepository.findActiveAdByPartnerId(partnerId,Instant.now().getEpochSecond());
-    	return ad;
+	public List<Ad> findAllAds() {
+		List<Ad> ads = new ArrayList<Ad>();
+		Iterable<Ad> adsForPartnerId = adRepository.findAll();
+		adsForPartnerId.forEach(ads::add);
+		return ads;
 	}
-	
+
 	@Override
-	public Ad saveAd(Ad ad){
+	public Ad findActiveAdByPartnerId(String partnerId) {
+		Ad ad = adRepository.findActiveAdByPartnerId(partnerId, Instant.now().getEpochSecond());
+		return ad;
+	}
+
+	@Override
+	public Ad saveAd(Ad ad) {
 		ad.setExpiration(Instant.now().getEpochSecond() + ad.getDuration());
 		Ad savedAd = adRepository.save(ad);
-        return savedAd;
+		return savedAd;
 	}
 
 	public AdRepository getAdRepository() {
@@ -53,5 +53,5 @@ public class AdServiceImpl implements AdService {
 	public void setAdRepository(AdRepository adRepository) {
 		this.adRepository = adRepository;
 	}
-	
+
 }

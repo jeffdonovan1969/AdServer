@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.jeffdonovan.adserver</groupId>
-	<artifactId>adserver</artifactId>
+	<artifactId>adserverDemo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>adserver</name>
+	<name>adserverDemo</name>
 	<description>Ad Server Project For Comcast Interview </description>
 
 	<parent>
