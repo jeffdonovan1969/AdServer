@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.jeffdonovan.adserver.domain.Ad;
+import com.jeffdonovan.adserver.exception.ResourceException;
 import com.jeffdonovan.adserver.service.AdService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -59,7 +60,7 @@ public class AdControllerUnitTest {
     	assertNotNull(ad);
     }
     
-    @Test
+    @Test(expected=ResourceException.class)
     public void testShowNotFound(){
     	String partnerId = "Partner Id 1";
     	
@@ -89,7 +90,7 @@ public class AdControllerUnitTest {
     	assertNotNull(ad);
     }
     
-    @Test
+    @Test(expected=ResourceException.class)
     public void testSaveActiveAdExists(){
     	Ad ad = new Ad("Partner Id 1", 1000L, 2000L, "The Ad Content");
     	
@@ -103,7 +104,7 @@ public class AdControllerUnitTest {
     	assertNotNull(ad);
     }
     
-    @Test
+    @Test(expected=ResourceException.class)
     public void testSaveBadRequest(){
     	Ad ad = new Ad("Partner Id 1", 1000L, 2000L, "The Ad Content");
     	

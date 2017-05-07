@@ -10,20 +10,30 @@ import javax.persistence.Table;
 
 import org.springframework.util.StringUtils;
 
+/**
+ * Domain class representing an Ad
+ * 
+ * @author Jeff.Donovan
+ *
+ */
 @Entity
 @Table(name = "Ad")
 public class Ad {
 	
+	// Partner Id acting as index
 	@Id
-	@Column(name = "partner_id")
+	@Column(name = "partner_id", unique=true)
 	private String partnerId;
 	
+	// Ad duration in seconds
 	@Column(name = "duration")
 	private Long duration;
 	
+	// Ad expiration time in seconds from current Epoch
 	@Column(name = "expiration")
 	private Long expiration;
 	
+	// Ad content
 	@Column(name = "ad_content", length = 500)
     private String adContent;
 

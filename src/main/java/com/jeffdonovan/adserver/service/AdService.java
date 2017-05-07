@@ -4,6 +4,12 @@ import java.util.List;
 
 import com.jeffdonovan.adserver.domain.Ad;
 
+/**
+ * Ad service interface
+ * 
+ * @author Jeff.Donovan
+ *
+ */
 public interface AdService {
 
 	public List<Ad> findAllAds();

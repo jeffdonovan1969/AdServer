@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 import com.jeffdonovan.adserver.domain.Ad;
 import com.jeffdonovan.adserver.repository.AdRepository;
 
+/**
+ * Implementation of {@link AdService} interface
+ * 
+ * @author Jeff.Donovan
+ *
+ */
 @Service("adService")
 @Scope("singleton")
 public class AdServiceImpl implements AdService {
