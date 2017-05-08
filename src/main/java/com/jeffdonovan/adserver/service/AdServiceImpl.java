@@ -39,7 +39,9 @@ public class AdServiceImpl implements AdService {
 
 	@Override
 	public Ad saveAd(Ad ad) {
-		ad.setExpiration(Instant.now().getEpochSecond() + ad.getDuration());
+		if (null == ad.getExpiration()) {
+			ad.setExpiration(Instant.now().getEpochSecond() + ad.getDuration());
+		}
 		return adRepository.save(ad);
 	}
 
