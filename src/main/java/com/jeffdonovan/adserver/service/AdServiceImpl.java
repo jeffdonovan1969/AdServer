@@ -28,22 +28,19 @@ public class AdServiceImpl implements AdService {
 	@Override
 	public List<Ad> findAllAds() {
 		List<Ad> ads = new ArrayList<Ad>();
-		Iterable<Ad> adsForPartnerId = adRepository.findAll();
-		adsForPartnerId.forEach(ads::add);
+		adRepository.findAll().forEach(ads::add);
 		return ads;
 	}
 
 	@Override
 	public Ad findActiveAdByPartnerId(String partnerId) {
-		Ad ad = adRepository.findActiveAdByPartnerId(partnerId, Instant.now().getEpochSecond());
-		return ad;
+		return adRepository.findActiveAdByPartnerId(partnerId, Instant.now().getEpochSecond());
 	}
 
 	@Override
 	public Ad saveAd(Ad ad) {
 		ad.setExpiration(Instant.now().getEpochSecond() + ad.getDuration());
-		Ad savedAd = adRepository.save(ad);
-		return savedAd;
+		return adRepository.save(ad);
 	}
 
 	public AdRepository getAdRepository() {

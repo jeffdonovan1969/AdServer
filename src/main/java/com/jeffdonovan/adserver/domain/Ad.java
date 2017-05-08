@@ -19,39 +19,38 @@ import org.springframework.util.StringUtils;
 @Entity
 @Table(name = "Ad")
 public class Ad {
-
+	
 	// Partner Id acting as index
 	@Id
-	@Column(name = "partner_id", unique = true)
+	@Column(name = "partner_id", unique=true)
 	private String partnerId;
-
+	
 	// Ad duration in seconds
 	@Column(name = "duration")
 	private Long duration;
-
+	
 	// Ad expiration time in seconds from current Epoch
 	@Column(name = "expiration")
 	private Long expiration;
-
+	
 	// Ad content
 	@Column(name = "ad_content", length = 500)
-	private String adContent;
+    private String adContent;
 
-	public Ad() {
-	}
-
-	public Ad(String partnerId, Long duration, String adContent) {
-		this.partnerId = partnerId;
-		this.duration = duration;
-		this.adContent = adContent;
-	}
-
-	public Ad(String partnerId, Long duration, Long expiration, String adContent) {
-		this.partnerId = partnerId;
-		this.duration = duration;
-		this.expiration = expiration;
-		this.adContent = adContent;
-	}
+    public Ad(){}
+    
+    public Ad(String partnerId, Long duration, String adContent) {
+        this.partnerId = partnerId;
+        this.duration = duration;
+        this.adContent = adContent;
+    }
+    
+    public Ad(String partnerId, Long duration, Long expiration, String adContent) {
+        this.partnerId = partnerId;
+        this.duration = duration;
+        this.expiration = expiration;
+        this.adContent = adContent;
+    }
 
 	public String getPartnerId() {
 		return partnerId;
@@ -84,8 +83,8 @@ public class Ad {
 	public void setExpiration(Long expiration) {
 		this.expiration = expiration;
 	}
-
-	public static List<String> validate(Ad ad) {
+	
+	public static List<String> validate(Ad ad){
 		List<String> validationErrors = new ArrayList<String>();
 		if (null == ad) {
 			validationErrors.add("Ad must have a value");
